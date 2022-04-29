@@ -1,9 +1,9 @@
 const azdev = require("azure-devops-node-api");
 const axios = require("axios");
 
-let orgUrl = `https://dev.azure.com/${process.env.orgname}`;
+let orgUrl = `https://dev.azure.com/${process.env.ORG_NAME}`;
 //// we should hide this infomation on the local environment
-let token = process.env.token;
+let token = process.env.TOKEN;
 let authHandler = azdev.getPersonalAccessTokenHandler(token);
 let connection = new azdev.WebApi(orgUrl, authHandler);
 
@@ -16,7 +16,7 @@ exports.findAll = async (req, res) => {
   try {
     let result = []
     async function WIQLquery() {
-      let teamC = { project: "test", projectId: "", team: "", teamId: "" };
+      let teamC = { project: process.env.PROJECT_NAME, projectId: "", team: "", teamId: "" };
       let query = `Select  [System.Parent] From WorkItems ${tag ? "Where [System.Tags] Contains '" + tag + "'" : ''}`
       let wiqls = { query };
       let queryResult = await (await vstsWI).queryByWiql(wiqls, teamC);
@@ -48,7 +48,7 @@ exports.findOne = async (req, res) => {
   try {
     let result = []
     async function WIQLquery() {
-      let teamC = { project: "test", projectId: "", team: "", teamId: "" };
+      let teamC = { project: process.env.PROJECT_NAME, projectId: "", team: "", teamId: "" };
       let query = `Select  [System.Title] From WorkItems Where [System.Id] = ${id}`
       let wiqls = { query };
       let queryResult = await (await vstsWI).queryByWiql(wiqls, teamC);
@@ -76,7 +76,7 @@ exports.findOne = async (req, res) => {
 
 // Update a item by the id in the request
 exports.update = async (req, res) => {
-  const url = `${orgUrl}/test/_apis/wit/workitems/${req.params.id}?bypassRules=true&api-version=4.1`
+  const url = `${orgUrl}/${PROJECT_NAME}/_apis/wit/workitems/${req.params.id}?bypassRules=true&api-version=4.1`
   const title = req.body.title
 
   const reqBody = [
