@@ -1,0 +1,59 @@
+<div class="list row">
+    <div class="col-md-8">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by tag"
+          [(ngModel)]="tag"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            (click)="searchByTitle()"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+    <div  class="col-md-6">
+      <h4>Work Item</h4>
+      <ul  *ngIf="!loading" class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let workItem of workItems; let i = index"
+          [class.active]="i == currentIndex"
+          [class.isTask]="workItem['workItemType'] == 'Task'"
+          (click)="setActiveWorkItem(workItem, i)"
+        >
+          {{ workItem.id }} : 
+          {{ workItem.title }}
+          <a class="badge badge-warning" routerLink="/workitems/{{ workItem.id }}">
+            Edit
+          </a>
+        </li>
+       
+      </ul>   
+      <div *ngIf="loading" >
+        loading....
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div *ngIf="currentWorkItem.id">
+        <h4>Work Item</h4>
+        <div>
+          <label><strong>Title:</strong></label> {{ currentWorkItem.title }}
+        </div>
+        <div>
+          <label><strong>Id:</strong></label>
+          {{ currentWorkItem.id }}
+        </div> 
+     
+      </div>
+     
+    </div>
+  </div>
+  
