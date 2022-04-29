@@ -1,9 +1,9 @@
 const azdev = require("azure-devops-node-api");
 const axios = require("axios");
 
-let orgUrl = "https://dev.azure.com/erichufnagle";
-let token = `2mxggdb6lqnk66mdbl2qvjph4t3ckunixemrnkhs2mdfyzszez2q`;
-
+let orgUrl = `https://dev.azure.com/${process.env.orgname}`;
+//// we should hide this infomation on the local environment
+let token = process.env.token;
 let authHandler = azdev.getPersonalAccessTokenHandler(token);
 let connection = new azdev.WebApi(orgUrl, authHandler);
 
