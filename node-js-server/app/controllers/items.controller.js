@@ -76,7 +76,7 @@ exports.findOne = async (req, res) => {
 
 // Update a item by the id in the request
 exports.update = async (req, res) => {
-  const url = `${orgUrl}/${PROJECT_NAME}/_apis/wit/workitems/${req.params.id}?bypassRules=true&api-version=4.1`
+  const url = `${orgUrl}/${process.env.PROJECT_NAME}/_apis/wit/workitems/${req.params.id}?bypassRules=true&api-version=4.1`
   const title = req.body.title
 
   const reqBody = [
